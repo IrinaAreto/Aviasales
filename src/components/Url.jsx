@@ -1,0 +1,1 @@
+export const initialUrl = 'https://front-test.beta.aviasales.ru/search';

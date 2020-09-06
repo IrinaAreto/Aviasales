@@ -1,0 +1,9 @@
+.header {
+    height: 160px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-logo {
+    margin-top: 50px;
+}
