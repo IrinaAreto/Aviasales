@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
+import {Header} from "./components/Header";
+import {SidebarFiler} from "./components/Sidebar";
+import {initialUrl} from "./components/Url";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isError, setIsError] = useState(false);
+    const [searchId, setSearchId] = useState("");
+
+    useEffect(() => {
+        getSearchId();
+    }, []);
+
+    const getSearchId = async () => {
+        setIsError(false);
+        try {
+            let response = await fetch(initialUrl);
+            const result = await response.json();
+            console.log(result.searchId);
+            setSearchId(result.searchId);
+        } catch (error) {
+            setIsError(true);
+            console.log("error: ", error);
+        }
+    }
+
+    return (
+        <div className="App">
+            <div className="layout">
+                <Header/>
+                <SidebarFiler/>
+            </div>
+        </div>
+    );
 }
 
 export default App;
