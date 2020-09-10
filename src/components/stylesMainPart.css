@@ -1,0 +1,90 @@
+.main-part {
+    position: absolute;
+    top: 160px;
+    left: 355px;
+}
+
+.first, .second {
+    width: 251px;
+    height: 50px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #4A4A4A;
+    background-color: #FFFFFF;
+    border: 1px solid #DFE5EC;
+}
+
+.active {
+    background-color: #2196F3;
+    color: #FFFFFF;
+    border-color: #2196F3;
+}
+
+.tabs > button:focus {
+    outline: #2196F3;
+    background-color: #2196F3;
+}
+
+.ticket {
+    margin-top: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.ticket-name {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.ticket-name > div:first-child {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    color: #2196F3;
+    margin-top: 6px;
+}
+
+.ticket-name > div:last-child {
+    margin-right: 30px;
+}
+
+.ticket-details {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 151px 151px 1fr;
+    grid-gap: 10px;
+}
+
+.ticket-details > div > div:first-child {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #A0B0B9;
+}
+
+.ticket-details > div > div:last-child {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #4A4A4A;
+}
+
+.ticket-change {
+    text-transform: uppercase;
+}

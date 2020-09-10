@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {Header} from "./components/Header";
 import {SidebarFiler} from "./components/Sidebar";
+import {MainPart} from "./components/MainPart";
 import {initialUrl} from "./components/Url";
 import './App.css';
 
 function App() {
-    const [isError, setIsError] = useState(false);
+/*    const [isError, setIsError] = useState(false);
     const [searchId, setSearchId] = useState("");
 
     useEffect(() => {
@@ -23,13 +24,14 @@ function App() {
             setIsError(true);
             console.log("error: ", error);
         }
-    }
+    }*/
 
     return (
         <div className="App">
             <div className="layout">
                 <Header/>
                 <SidebarFiler/>
+                <MainPart/>
             </div>
         </div>
     );
