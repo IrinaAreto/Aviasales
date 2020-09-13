@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {gettingTickets, iataPics, initialUrl} from "./Url";
 import {TimeFromDate} from "./TimeFromDate";
+import {StopsCount} from "./StopsCount";
 import "./stylesMainPart.css";
 
 export function MainPart() {
@@ -42,9 +43,9 @@ export function MainPart() {
 
             setData(newData);
 
-/*            if(!result.stop || response.status === 500) {
+            if(!result.stop || response.status === 500) {
                 getTickets(searchId);
-            }*/
+            }
 
         } catch (error) {
             setIsError(true);
@@ -84,10 +85,10 @@ export function MainPart() {
                             <div className="ticket-details">
                                 <div><div>{item.segments[0].origin} - {item.segments[0].destination}</div><TimeFromDate fetchedDate={item.segments[0].date} duration={item.segments[0].duration}/></div>
                                 <div><div>в пути</div><div>{item.segments[0].duration>=60 ? Math.floor(item.segments[0].duration/60) : "00"}ч {item.segments[0].duration % 60}м</div></div>
-                                <div><div>2 пересадки</div><div className="ticket-change">hkg,jnb</div></div>
+                                <StopsCount stops={item.segments[0].stops}/>
                                 <div><div>{item.segments[1].origin} - {item.segments[1].destination}</div><TimeFromDate fetchedDate={item.segments[1].date} duration={item.segments[1].duration}/></div>
                                 <div><div>в пути</div><div>{item.segments[1].duration>=60 ? Math.floor(item.segments[1].duration/60) : "00"}ч {item.segments[1].duration % 60}м</div></div>
-                                <div><div>1 пересадка</div><div className="ticket-change">hkg</div></div>
+                                <StopsCount stops={item.segments[1].stops}/>
                             </div>
                         </div>
                     )
