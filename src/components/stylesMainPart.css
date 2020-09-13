@@ -19,6 +19,14 @@
     border: 1px solid #DFE5EC;
 }
 
+.first {
+    border-radius: 5px 0 0 5px;
+}
+
+.second {
+    border-radius: 0 5px 5px 0;
+}
+
 .active {
     background-color: #2196F3;
     color: #FFFFFF;
@@ -41,7 +49,7 @@
 .ticket-name {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
 .ticket-name > div:first-child {
@@ -50,6 +58,7 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 24px;
+    height: 24px;
     color: #2196F3;
     margin-top: 6px;
 }
