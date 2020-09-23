@@ -7,7 +7,6 @@ import {useSelector} from "react-redux";
 
 export function MainPart() {
     const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
