@@ -6,15 +6,19 @@ import {setTicketFilters} from "../store/Actions";
 import "./stylesSidebar.css";
 
 export function SidebarFiler() {
-    const [filters, setFilters] = useState([]);
+    const [filters, setFilters] = useState(filtersList.map((n) => ({ active: true, value: n.value, id: n.id, stops: n.stops })));
+    const [isError, setIsError] = useState(false);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setFilters(filtersList.map((n) => ({ active: true, value: n.value, id: n.id, stops: n.stops })));
-    }, [ filtersList ]);
+        const initialFilters = filters.filter(n => n.active).map(n => n.stops);
+        dispatch(setTicketFilters(initialFilters));
+    }, []);
 
     const onFilterChange = ({ target: { checked: active, dataset: {value} } }) => {
+        setIsError(false);
+        try{
         const newFilters = filters.map(n => [n.value, 'Все'].includes(value) ? { ...n, active } : n),
             isAll = newFilters.filter( n => n.value !== 'Все' ).every( n => n.active );
 
@@ -24,6 +28,9 @@ export function SidebarFiler() {
 
         const filteredItems = newFilters.filter(n => n.active).map(n => n.stops);
         dispatch(setTicketFilters(filteredItems));
+        } catch (error) {
+            setIsError(true);
+        }
     };
 
     return (
@@ -33,7 +40,7 @@ export function SidebarFiler() {
                 <React.Fragment>
                     {filters.map((item) => {
                         return (
-                        <Filter key={item.id} {...item} onChange={onFilterChange}  />
+                        <Filter key={item.id} {...item} onChange={isError ? null : onFilterChange}  />
                         )
                     })}
                 </React.Fragment>
