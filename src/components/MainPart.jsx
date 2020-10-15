@@ -1,72 +1,29 @@
-import React, {useEffect, useState} from "react";
-import {gettingTickets, iataPics, initialUrl} from "./Url";
+import React, {useEffect} from "react";
+import {iataPics} from "./Url";
 import {TimeFromDate} from "./TimeFromDate";
 import {StopsCount} from "./StopsCount";
+import {getSearchId, itemsHasSorted} from "../store/Actions";
 import "./stylesMainPart.css";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export function MainPart() {
-    const [data, setData] = useState([]);
-    const [isError, setIsError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
+    const ticketsArray = useSelector((state) => state.items);
 
     useEffect(() => {
-         getSearchId();
+        dispatch(getSearchId());
     }, []);
 
-    const getSearchId = async () => {
-        setIsError(false);
-        try {
-            let response = await fetch(initialUrl);
-            const result = await response.json();
-            console.log("search id: ", result.searchId);
-            await getTickets(result.searchId);
-        } catch (error) {
-            setIsError(true);
-            console.log("id fetching error");
-        }
-    }
+    const sortTickets = (sortType) => {
+        let ticketsArr = ticketsArray.slice();
 
-    const getTickets = async (searchId) => {
-        setIsError(false);
-        setIsLoading(true);
-        try {
-            let response = await fetch(gettingTickets + `?searchId=${searchId}`);
-            console.log(response.status);
-            let newData = [];
-            let result = "";
-            if(response.status !== 200) {
-                newData = data.slice();
-            } else if (response.status === 200) {
-                result = await response.json();
-                newData = data.slice().concat(result.tickets);
-            }
-
-            newData = sortTickets(newData, "cheaper");
-
-            setData(newData);
-
-            if(!result.stop || response.status !== 200) {
-                await getTickets(searchId);
-            }
-
-        } catch (error) {
-            setIsError(true);
-        }
-        setIsLoading(false);
-    }
-
-    const sortTickets = (ticketsArr, sortType) => {
         if(sortType === "cheaper") {
             ticketsArr = ticketsArr.sort((a, b) => a.price > b.price ? 1 : -1);
         } else if(sortType === "fastest") {
             ticketsArr = ticketsArr.sort((a, b) => a.segments[0].duration+a.segments[1].duration > b.segments[0].duration+b.segments[1].duration ? 1 : -1);
         }
-        return ticketsArr;
+        dispatch(itemsHasSorted(ticketsArr));
     }
-
-    const checkedFilters = useSelector((state) => state.filters);
-    const filteredTickets = checkedFilters.includes("all") ? data.slice() : data.slice().filter(n => (checkedFilters.includes(n.segments[0].stops.length) || checkedFilters.includes(n.segments[1].stops.length)));
 
     const setActiveTab = (name, type) => {
         let firstTab = document.getElementsByClassName('first');
@@ -80,10 +37,15 @@ export function MainPart() {
             secondTab[0].classList.add('active');
             firstTab[0].classList.remove('active');
         }
-        let unsortedData = data.slice();
-        let sortedData = sortTickets(unsortedData, type);
-        setData(sortedData);
+
+        sortTickets(type);
     }
+
+    const checkedFilters = useSelector((state) => state.filters);
+    const filteredTickets = checkedFilters.includes("all") ? ticketsArray.slice() : ticketsArray.slice().filter(n => (checkedFilters.includes(n.segments[0].stops.length) || checkedFilters.includes(n.segments[1].stops.length)));
+
+    const isError = useSelector((state) => state.err);
+    const isLoading = useSelector((state) => state.loading);
 
     if(isError) return <div className="main-part">Ошибка!</div>;
     else

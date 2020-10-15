@@ -1,4 +1,6 @@
-import {createStore} from "redux";
-import {ticketsFilter} from "./Reducer";
+import {createStore, applyMiddleware, compose} from "redux";
+import thunk from "redux-thunk";
+import {reducer} from "./Reducer";
 
-export const store = createStore(ticketsFilter, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));

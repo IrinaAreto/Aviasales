@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Filter} from "./Filters";
 import {filtersList} from "./FiltersList";
 import {useDispatch} from "react-redux";
-import {setTicketFilters} from "../store/Actions";
+import {filtersHasSet} from "../store/Actions";
 import "./stylesSidebar.css";
 
 export function SidebarFiler() {
@@ -13,7 +13,7 @@ export function SidebarFiler() {
 
     useEffect(() => {
         const initialFilters = filters.filter(n => n.active).map(n => n.stops);
-        dispatch(setTicketFilters(initialFilters));
+        dispatch(filtersHasSet(initialFilters));
     }, []);
 
     const onFilterChange = ({ target: { checked: active, dataset: {value} } }) => {
@@ -27,7 +27,7 @@ export function SidebarFiler() {
         setFilters(newFilters);
 
         const filteredItems = newFilters.filter(n => n.active).map(n => n.stops);
-        dispatch(setTicketFilters(filteredItems));
+        dispatch(filtersHasSet(filteredItems));
         } catch (error) {
             setIsError(true);
         }
