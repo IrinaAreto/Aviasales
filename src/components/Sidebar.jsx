@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Filter} from "./Filters";
+import React, {useEffect, useState, useCallback} from "react";
+import {MemoizedFilter} from "./Filters";
 import {filtersList} from "./FiltersList";
 import {useDispatch} from "react-redux";
 import {filtersHasSet} from "../store/Actions";
@@ -16,7 +16,7 @@ export function SidebarFiler() {
         dispatch(filtersHasSet(initialFilters));
     }, []);
 
-    const onFilterChange = ({ target: { checked: active, dataset: {value} } }) => {
+    const onFilterChange = useCallback(({ target: { checked: active, dataset: {value} } }) => {
         setIsError(false);
         try{
         const newFilters = filters.map(n => [n.value, 'Все'].includes(value) ? { ...n, active } : n),
@@ -31,19 +31,19 @@ export function SidebarFiler() {
         } catch (error) {
             setIsError(true);
         }
-    };
+    }, [filters]);
 
     return (
         <div className="sidebar">
             <form>
                 <div className="sidebar-name">количество пересадок</div>
-                <React.Fragment>
+                <>
                     {filters.map((item) => {
                         return (
-                        <Filter key={item.id} {...item} onChange={isError ? null : onFilterChange}  />
+                        <MemoizedFilter key={item.id} {...item} onChange={isError ? null : onFilterChange}  />
                         )
                     })}
-                </React.Fragment>
+                </>
             </form>
         </div>
     )

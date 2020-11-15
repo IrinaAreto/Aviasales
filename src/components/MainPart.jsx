@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {iataPics} from "./Url";
-import {TimeFromDate} from "./TimeFromDate";
-import {StopsCount} from "./StopsCount";
+import {TicketDetails} from "./TicketDetails";
 import {getSearchId, itemsHasSorted} from "../store/Actions";
 import "./stylesMainPart.css";
 import {useDispatch, useSelector} from "react-redux";
@@ -52,8 +51,9 @@ export function MainPart() {
     return(
         <div className="main-part">
             <div className="tabs"><button className='first active' onClick={()=>{setActiveTab('first', "cheaper")}}>самый дешевый</button><button className='second ' onClick={()=>{setActiveTab('second', "fastest")}}>самый быстрый</button></div>
-            {isLoading ? (<div>
+            {isLoading ? (<div className='loading'>
                 Загрузка...
+                <div className="loading-circle"/>
             </div>) : (
                 filteredTickets.slice(0, 5).map((item) => {
                     return (
@@ -63,12 +63,8 @@ export function MainPart() {
                                 <div><img src={iataPics + item.carrier + '.png'} alt="iata symbol"/></div>
                             </div>
                             <div className="ticket-details">
-                                <div><div>{item.segments[0].origin} - {item.segments[0].destination}</div><TimeFromDate fetchedDate={item.segments[0].date} duration={item.segments[0].duration}/></div>
-                                <div><div>в пути</div><div>{item.segments[0].duration>=60 ? Math.floor(item.segments[0].duration/60) : "00"}ч {item.segments[0].duration % 60}м</div></div>
-                                <StopsCount stops={item.segments[0].stops}/>
-                                <div><div>{item.segments[1].origin} - {item.segments[1].destination}</div><TimeFromDate fetchedDate={item.segments[1].date} duration={item.segments[1].duration}/></div>
-                                <div><div>в пути</div><div>{item.segments[1].duration>=60 ? Math.floor(item.segments[1].duration/60) : "00"}ч {item.segments[1].duration % 60}м</div></div>
-                                <StopsCount stops={item.segments[1].stops}/>
+                                <TicketDetails segment={item.segments[0]} />
+                                <TicketDetails segment={item.segments[1]} />
                             </div>
                         </div>
                     )
