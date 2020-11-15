@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./stylesMainPart.module.css";
 
 export function StopsCount({stops}) {
     let stopsTitle = "";
@@ -13,7 +14,7 @@ export function StopsCount({stops}) {
     return(
         <div>
             <div>{stops.length>0 ? stops.length : "без"} {stopsTitle}</div>
-            <div className="ticket-change">{stops.join(", ")}</div>
+            <div className={styles.ticketChange}>{stops.join(", ")}</div>
         </div>
     )
 }

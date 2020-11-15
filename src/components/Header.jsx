@@ -1,10 +1,10 @@
 import React from "react";
-import "./stylesHeader.css";
+import styles from "./stylesHeader.module.css";
 
 export function Header() {
     return (
-        <div className="header">
-            <div className="header-logo"><img src="/img/Logo.png" alt="logo" /></div>
+        <div className={styles.header}>
+            <div className={styles.headerLogo}><img src="/img/Logo.png" alt="logo" /></div>
         </div>
     )
 }

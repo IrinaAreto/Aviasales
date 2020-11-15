@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {iataPics} from "./Url";
 import {TicketDetails} from "./TicketDetails";
 import {getSearchId, itemsHasSorted} from "../store/Actions";
-import "./stylesMainPart.css";
+import styles from "./stylesMainPart.module.css";
 import {useDispatch, useSelector} from "react-redux";
 
 export function MainPart() {
@@ -25,16 +25,16 @@ export function MainPart() {
     }
 
     const setActiveTab = (name, type) => {
-        let firstTab = document.getElementsByClassName('first');
-        let secondTab = document.getElementsByClassName('second');
+        let firstTab = document.getElementsByClassName(`${styles.first}`);
+        let secondTab = document.getElementsByClassName(`${styles.second}`);
 
-        if(name === 'first'){
-            firstTab[0].classList.add('active');
-            secondTab[0].classList.remove('active');
+        if(name === `${styles.first}`){
+            firstTab[0].classList.add(`${styles.active}`);
+            secondTab[0].classList.remove(`${styles.active}`);
 
-        } else if(name === 'second') {
-            secondTab[0].classList.add('active');
-            firstTab[0].classList.remove('active');
+        } else if(name === `${styles.second}`) {
+            secondTab[0].classList.add(`${styles.active}`);
+            firstTab[0].classList.remove(`${styles.active}`);
         }
 
         sortTickets(type);
@@ -46,23 +46,23 @@ export function MainPart() {
     const isError = useSelector((state) => state.err);
     const isLoading = useSelector((state) => state.loading);
 
-    if(isError) return <div className="main-part">Ошибка!</div>;
+    if(isError) return <div className={styles.mainPart}>Ошибка!</div>;
     else
     return(
-        <div className="main-part">
-            <div className="tabs"><button className='first active' onClick={()=>{setActiveTab('first', "cheaper")}}>самый дешевый</button><button className='second ' onClick={()=>{setActiveTab('second', "fastest")}}>самый быстрый</button></div>
-            {isLoading ? (<div className='loading'>
+        <div className={styles.mainPart}>
+            <div className={styles.tabs}><button className={`${styles.first} ${styles.active}`} onClick={()=>{setActiveTab(`${styles.first}`, "cheaper")}}>самый дешевый</button><button className={`${styles.second} `} onClick={()=>{setActiveTab(`${styles.second}`, "fastest")}}>самый быстрый</button></div>
+            {isLoading ? (<div className={styles.loading}>
                 Загрузка...
-                <div className="loading-circle"/>
+                <div className={styles.loadingCircle}/>
             </div>) : (
                 filteredTickets.slice(0, 5).map((item) => {
                     return (
-                        <div className="ticket" key={item.price+item.carrier+item.segments[0].duration}>
-                            <div className="ticket-name">
+                        <div className={styles.ticket} key={item.price+item.carrier+item.segments[0].duration}>
+                            <div className={styles.ticketName}>
                                 <div>{item.price} P</div>
                                 <div><img src={iataPics + item.carrier + '.png'} alt="iata symbol"/></div>
                             </div>
-                            <div className="ticket-details">
+                            <div className={styles.ticketDetails}>
                                 <TicketDetails segment={item.segments[0]} />
                                 <TicketDetails segment={item.segments[1]} />
                             </div>

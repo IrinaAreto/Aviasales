@@ -3,7 +3,7 @@ import {MemoizedFilter} from "./Filters";
 import {filtersList} from "./FiltersList";
 import {useDispatch} from "react-redux";
 import {filtersHasSet} from "../store/Actions";
-import "./stylesSidebar.css";
+import styles from "./stylesSidebar.module.css";
 
 export function SidebarFiler() {
     const [filters, setFilters] = useState(filtersList.map((n) => ({ active: true, value: n.value, id: n.id, stops: n.stops })));
@@ -34,9 +34,9 @@ export function SidebarFiler() {
     }, [filters]);
 
     return (
-        <div className="sidebar">
+        <div className={styles.sidebar}>
             <form>
-                <div className="sidebar-name">количество пересадок</div>
+                <div className={styles.sidebarName}>количество пересадок</div>
                 <>
                     {filters.map((item) => {
                         return (

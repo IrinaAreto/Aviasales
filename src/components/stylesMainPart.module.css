@@ -1,4 +1,4 @@
-.main-part {
+.mainPart {
     position: absolute;
     top: 160px;
     left: 355px;
@@ -46,13 +46,13 @@
     padding: 20px;
 }
 
-.ticket-name {
+.ticketName {
     display: flex;
     justify-content: space-between;
     margin-bottom: 14px;
 }
 
-.ticket-name > div:first-child {
+.ticketName > div:first-child {
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -63,18 +63,18 @@
     margin-top: 6px;
 }
 
-.ticket-name > div:last-child {
+.ticketName > div:last-child {
     margin-right: 30px;
 }
 
-.ticket-details {
+.ticketDetails {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 151px 151px 1fr;
     grid-gap: 10px;
 }
 
-.ticket-details > div > div:first-child {
+.ticketDetails > div > div:first-child {
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -85,7 +85,7 @@
     color: #A0B0B9;
 }
 
-.ticket-details > div > div:last-child {
+.ticketDetails > div > div:last-child {
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -94,7 +94,7 @@
     color: #4A4A4A;
 }
 
-.ticket-change {
+.ticketChange {
     text-transform: uppercase;
 }
 
@@ -104,7 +104,7 @@
     font-size: 18px;
 }
 
-.loading-circle {
+.loadingCircle {
     width: 30px;
     height: 30px;
     border: 5px solid #2196F3;

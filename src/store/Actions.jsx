@@ -64,7 +64,8 @@ function fetchTickets(searchId) {
         let result = "";
         let sortedResult = [];
             if(response.status !== 200) {
-                await fetchTickets(searchId);
+                dispatch(fetchTickets(searchId));
+                return;
             } else if (response.status === 200) {
             result = await response.json();
             sortedResult = result.tickets.sort((a, b) => a.price > b.price ? 1 : -1);
@@ -73,7 +74,8 @@ function fetchTickets(searchId) {
         dispatch(itemsHasFetched(sortedResult));
 
             if(!result.stop) {
-                fetchTickets(searchId);
+                dispatch(fetchTickets(searchId));
+                return;
             }
 
         } catch (error) {
