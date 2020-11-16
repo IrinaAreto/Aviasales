@@ -60,20 +60,20 @@ function fetchTickets(searchId) {
         dispatch(itemsAreLoading(true));
 
         try {
-        let response = await fetch(gettingTickets + `?searchId=${searchId}`);
-        let result = "";
-        let sortedResult = [];
-            if(response.status !== 200) {
+            let response = await fetch(gettingTickets + `?searchId=${searchId}`);
+            let result = "";
+            let sortedResult = [];
+            if (response.status !== 200) {
                 dispatch(fetchTickets(searchId));
                 return;
             } else if (response.status === 200) {
-            result = await response.json();
-            sortedResult = result.tickets.sort((a, b) => a.price > b.price ? 1 : -1);
-        }
+                result = await response.json();
+                sortedResult = result.tickets.sort((a, b) => a.price > b.price ? 1 : -1);
+            }
 
-        dispatch(itemsHasFetched(sortedResult));
+            dispatch(itemsHasFetched(sortedResult));
 
-            if(!result.stop) {
+            if (!result.stop) {
                 dispatch(fetchTickets(searchId));
                 return;
             }
