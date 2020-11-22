@@ -1,8 +1,14 @@
 import {SET_FILTERS, GET_TICKETS_FROM_SERVER, SORT_TICKETS, IS_ERROR, IS_LOADING} from "./Actions";
 import {combineReducers} from "redux";
+import {filtersList} from "../components/FiltersList";
 
 const initialState = {
-    filters: [],
+    filters: filtersList.map((n) => ({
+        active: true,
+        value: n.value,
+        id: n.id,
+        stops: n.stops
+    })),
     items: [],
     err: false,
     loading: false

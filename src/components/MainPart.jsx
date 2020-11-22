@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import {iataPics} from "./Url";
-import {TicketDetails} from "./TicketDetails";
+import {MemoizedTicket} from "./Ticket";
 import {getSearchId, itemsHasSorted} from "../store/Actions";
 import styles from "./stylesMainPart.module.css";
 import {useDispatch, useSelector} from "react-redux";
@@ -41,7 +40,8 @@ export function MainPart() {
     }
 
     const checkedFilters = useSelector((state) => state.filters);
-    const filteredTickets = checkedFilters.includes("all") ? ticketsArray.slice() : ticketsArray.slice().filter(n => (checkedFilters.includes(n.segments[0].stops.length) || checkedFilters.includes(n.segments[1].stops.length)));
+    const filtersStops = checkedFilters.filter(n => n.active).map(n => n.stops);
+    const filteredTickets = filtersStops.includes("all") ? ticketsArray.slice() : ticketsArray.slice().filter(n => (filtersStops.includes(n.segments[0].stops.length) || filtersStops.includes(n.segments[1].stops.length)));
 
     const isError = useSelector((state) => state.err);
     const isLoading = useSelector((state) => state.loading);
@@ -66,16 +66,7 @@ export function MainPart() {
                 </div>) : (
                     filteredTickets.slice(0, 5).map((item) => {
                         return (
-                            <div className={styles.ticket} key={item.price + item.carrier + item.segments[0].duration}>
-                                <div className={styles.ticketName}>
-                                    <div>{item.price} P</div>
-                                    <div><img src={iataPics + item.carrier + '.png'} alt="iata symbol"/></div>
-                                </div>
-                                <div className={styles.ticketDetails}>
-                                    <TicketDetails segment={item.segments[0]}/>
-                                    <TicketDetails segment={item.segments[1]}/>
-                                </div>
-                            </div>
+                            <MemoizedTicket item={item} key={item.price + item.carrier + item.segments[0].duration}/>
                         )
                     })
                 )}

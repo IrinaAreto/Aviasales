@@ -1,4 +1,5 @@
 import {gettingTickets, initialUrl} from "../components/Url";
+import {useCallback} from "react";
 
 export const SET_FILTERS = "SET_FILTERS";
 export const GET_TICKETS_FROM_SERVER = "GET_TICKETS_FROM_SERVER";
@@ -83,5 +84,21 @@ function fetchTickets(searchId) {
         }
 
         dispatch(itemsAreLoading(false));
+    }
+}
+
+export function onFilterChange({filters, active, value}) {
+    return (dispatch) => {
+        dispatch(errorHasSet(false));
+        try {
+            const newFilters = filters.map(n => [n.value, 'Все'].includes(value) ? {...n, active} : n),
+                isAll = newFilters.filter(n => n.value !== 'Все').every(n => n.active);
+
+            newFilters.find(n => n.value === 'Все').active = isAll;
+
+            dispatch(filtersHasSet(newFilters));
+        } catch (error) {
+            dispatch(errorHasSet(true));
+        }
     }
 }
